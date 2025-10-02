@@ -23,10 +23,17 @@ merged_df = pd.merge(orders_df,products_df, on="ProductID", how="left")
 
 # Load
 conn = sqlite3.connect(sales_db)
+cur = conn.cursor()
+
 # Create dimension table for products
-
-
-# Create dimension table for dates 
+cur.execute(""""
+CREATE TABLE IF NOT EXISTS dim_products (
+    ProductID TEXT PRIMARY KEY
+    ProductName TEXT,
+    Category TEXT,
+    Cost REAL         
+)
+""")
 
 
 
