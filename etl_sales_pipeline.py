@@ -35,6 +35,14 @@ CREATE TABLE IF NOT EXISTS dim_products (
 )
 """)
 
-
-
+# Create dimension table for order dates
+cur.execute("""
+CREATE TABLE IF NOT EXISTS dim_date (
+    DateID Integer PRIMARY KEY,
+    Date TEXT, 
+    Year INTEGER, 
+    Month INTEGER,
+    Day INTEGER
+)
+""")
 
