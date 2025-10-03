@@ -25,9 +25,9 @@ conn = sqlite3.connect(sales_db)
 cur = conn.cursor()
 
 # Create dimension table for products
-cur.execute(""""
+cur.execute("""
 CREATE TABLE IF NOT EXISTS dim_products (
-    ProductID TEXT PRIMARY KEY
+    ProductID TEXT PRIMARY KEY,
     ProductName TEXT,
     Category TEXT,
     Cost REAL         
@@ -66,3 +66,15 @@ CREATE TABLE IF NOT EXISTS fact_sales (
     FOREIGN KEY (CustomerID) REFERENCES dim_customers(CustomerID))
 """)
 
+# Load product dimension data
+products_df.to_sql("dim_products", conn, if_exists="replace", index=False)
+
+# Load order date dimension data
+date_dim = merged_df[['OrderDate', 'OrderYear', 'OrderMonth', 'OrderDay']].drop_duplicates()
+date_dim.to_sql('dim_date', conn, if_exists='replace', index=False)
+
+# Load customer dimension data
+customer_dim = merged_df[['CustomerID']].drop_duplicates()
+
+
+conn.close()
