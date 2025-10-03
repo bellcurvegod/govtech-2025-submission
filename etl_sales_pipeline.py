@@ -6,8 +6,6 @@ import sqlite3
 orders_df = pd.read_csv("orders.csv")
 products_df = pd.read_csv("products.csv")
 
-sales_db = "sales.db"
-
 # Transform 
 # Revenue for each order line item
 orders_df['Revenue'] = orders_df['Quantity'] * orders_df['Price']
@@ -22,6 +20,7 @@ orders_df['OrderDay'] = orders_df['OrderDate'].dt.day
 merged_df = pd.merge(orders_df,products_df, on="ProductID", how="left")
 
 # Load
+sales_db = "sales.db"
 conn = sqlite3.connect(sales_db)
 cur = conn.cursor()
 
@@ -43,6 +42,13 @@ CREATE TABLE IF NOT EXISTS dim_date (
     Year INTEGER, 
     Month INTEGER,
     Day INTEGER
+)
+""")
+
+# Create dimension table for customers
+cur.execute("""
+CREATE TABLE IF NOT EXISTS dim_customers (
+    CustomerID TEXT PRIMARY KEY            
 )
 """)
 
