@@ -1,6 +1,10 @@
+
+
 from datetime import datetime, date
 import pandas as pd
 import sqlite3
+import sys
+
 
 # Extract - Load orders and product CSVs into DF
 orders_df = pd.read_csv("orders.csv")
