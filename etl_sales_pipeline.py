@@ -52,3 +52,17 @@ CREATE TABLE IF NOT EXISTS dim_customers (
 )
 """)
 
+# Create fact table [fact_sales]
+cur.execute("""
+CREATE TABLE IF NOT EXISTS fact_sales (
+    OrderID INTEGER PRIMARY KEY,
+    ProductID TEXT,
+    CustomerID TEXT,
+    DateID INTEGER,
+    Quantity INTEGER,
+    Price REAL,
+    Revenue REAL,
+    FOREIGN KEY (ProductID) REFERENCES dIm_products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES dim_customers(CustomerID))
+""")
+
